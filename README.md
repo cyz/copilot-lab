@@ -8,9 +8,9 @@ Cada lab dura aproximadamente 15 minutos e cria um mini projeto funcional. Os ex
 
 | Lab | Projeto | Recurso explorado | Duração |
 |---|---|---|---:|
-| [Desenvolvimento Agentic com Copilot Chat](./material.md) | Calculadora web | Instructions, implementação autônoma e teste no navegador | 15 min |
-| [Side Chats com `/btw`](./lab-side-chat-btw.md) | Gerador de senhas | Perguntas contextuais sem interromper o agente | 15 min |
-| [Feedback para Agentes no Navegador](./lab-feedback-browser.md) | Landing page de uma cafeteria | Comentários em elementos do navegador integrado | 15 min |
+| [Desenvolvimento Agentic com Copilot Chat](./lab-01.md) | Calculadora web | Instructions, implementação autônoma e teste no navegador | 15 min |
+| [Side Chats com `/btw`](./lab-02.md) | Gerador de senhas | Perguntas contextuais sem interromper o agente | 15 min |
+| [Feedback para Agentes no Navegador](./lab-03.md) | Landing page de uma cafeteria | Comentários em elementos do navegador integrado | 15 min |
 
 ## 1. Desenvolvimento Agentic com Copilot Chat
 
@@ -23,7 +23,7 @@ Durante o exercício, você vai:
 - Executar os testes automatizados.
 - Validar a aplicação no navegador integrado.
 
-[Abrir o lab](./material.md)
+[Abrir o lab](./lab-01.md)
 
 ## 2. Side Chats com `/btw`
 
@@ -33,7 +33,7 @@ Enquanto o agente implementa o projeto, você vai usar `/btw` para fazer pergunt
 
 > Este exercício deve ser realizado no **Agents Window**, onde o comando `/btw` está disponível.
 
-[Abrir o lab](./lab-side-chat-btw.md)
+[Abrir o lab](./lab-02.md)
 
 ## 3. Feedback para Agentes no Navegador
 
@@ -47,7 +47,7 @@ Durante o exercício, você vai:
 - Anexar comentários aos elementos selecionados.
 - Pedir ao agente para implementar e testar o feedback.
 
-[Abrir o lab](./lab-feedback-browser.md)
+[Abrir o lab](./lab-03.md)
 
 ## Como realizar os labs
 
