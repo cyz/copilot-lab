@@ -1,5 +1,14 @@
 # Lab: Desenvolvimento Agentic com Copilot Chat
 
+**Duração estimada:** até 15 minutos.
+
+## Pré-requisitos
+
+- VS Code atualizado, com acesso ao GitHub Copilot e uma sessão autenticada.
+- Node.js LTS e npm instalados. No terminal, confira `node --version` e `npm --version`.
+- Acesso à internet para instalar Express e Tailwind CSS.
+- Permissão para executar ferramentas de terminal e navegador. Revise cada solicitação antes de aprová-la; não é necessário liberar todas as ferramentas automaticamente.
+
 ## O que vamos construir
 
 Vamos construir uma calculadora simples com frontend em Tailwind CSS e backend em Node.js com Express.
@@ -25,6 +34,8 @@ Durante os exercícios:
 2. Confirme que as ferramentas de terminal e navegador estão disponíveis.
 
 > Os comandos `/create-instructions`, `/create-prompt`, `/create-agent` e `/init`, assim como os prompt files, são usados aqui no contexto do harness Local. Eles podem não estar disponíveis em outros harnesses.
+
+Se um comando de criação não aparecer, peça ao Chat em linguagem natural para criar o mesmo arquivo no caminho indicado. Não mude para outro harness para executar os prompt files deste laboratório.
 
 ### Onde encontrar os recursos no VS Code
 
@@ -80,6 +91,7 @@ a estrutura e os padrões de código do projeto.
 Stack:
 - JavaScript com Node.js e Express no backend
 - Tailwind CSS no frontend, com interface moderna no estilo dark mode do VS Code
+- Compilar Tailwind CSS localmente com a ferramenta compatível com a versão instalada, sem depender de CDN no navegador
 
 Estrutura:
 - src/calculadora/ para funções puras de domínio
@@ -120,7 +132,7 @@ Especializa o comportamento do Copilot para o domínio de cálculo. Entra em aç
 Crie uma instruction de workspace chamada calculadora em
 .github/instructions/calculadora.instructions.md.
 
-Configure a instruction com applyTo: "src/**/*.js" e oriente o Copilot
+Configure a instruction com applyTo: "src/calculadora/**/*.js,src/services/**/*.js" e oriente o Copilot
 ao trabalhar com código de operações matemáticas.
 
 O Copilot deve sempre:
@@ -143,7 +155,7 @@ Para verificar:
 1. No Chat, clique na engrenagem **Configure Chat**.
 2. No editor de customizações, abra **Instructions**.
 3. Confirme que `calculadora.instructions.md` aparece como uma instruction do workspace.
-4. Clique no nome da instruction e verifique se o campo `applyTo` contém `src/**/*.js`.
+4. Clique no nome da instruction e verifique se o campo `applyTo` contém `src/calculadora/**/*.js,src/services/**/*.js`. As funções puras são as de domínio; o serviço valida e orquestra chamadas.
 
 ---
 
@@ -170,6 +182,11 @@ Requisitos:
 - Crie scripts npm para iniciar a aplicação e executar os testes.
 - Sirva a aplicação em http://localhost:3000.
 - Implemente testes automatizados para soma, subtração e entradas inválidas.
+- Defina um contrato HTTP consistente: requisições com operação e dois números,
+  resposta de sucesso com resultado numérico e HTTP 400 com mensagem para entrada
+  inválida. Rejeite valores ausentes, vazios e não finitos, sem convertê-los em zero.
+- Teste também as rotas HTTP e a propagação dos erros até a interface.
+- Use node:test para os testes e documente o formato das requisições no README.
 - Crie um README com instruções de instalação, teste e execução.
 - Instale as dependências, execute os testes e corrija eventuais falhas.
 ```
@@ -184,6 +201,10 @@ npm start
 ```
 
 Com o servidor em execução, abra `http://localhost:3000` e confirme que soma e subtração funcionam.
+
+Teste `2 + 3 = 5`, `2 - 5 = -3` e `1.5 + 2.25 = 3.75`. Um campo vazio deve produzir uma mensagem de validação, não um resultado numérico. Confira os testes de domínio e HTTP no terminal.
+
+Se o agente já iniciou o servidor, reutilize-o em vez de executar `npm start` novamente. Se a porta 3000 estiver ocupada por outro projeto, peça uma porta livre e use a URL informada em todas as etapas seguintes. Não encerre processos de outros projetos.
 
 ---
 
@@ -230,6 +251,8 @@ Ao final, informe:
 - Testes executados e resultado
 - Validação realizada no navegador
 ```
+
+Se a versão instalada não solicitar a variável de entrada, execute `/nova-operacao multiplicacao` e peça ao prompt para usar o argumento informado, sem adivinhar uma operação.
 
 ## Verificar o prompt file
 
@@ -314,11 +337,13 @@ faça dogfooding da calculadora
 
 Confirme na seção **References** da resposta que a skill foi carregada.
 
+O nome dessa seção pode variar entre versões. Expanda os detalhes de contexto ou ferramentas da resposta e procure o caminho `.github/skills/calculadora-dogfooding/SKILL.md`. Uma resposta dizendo apenas que testou a página não comprova o carregamento.
+
 ---
 
 # Passo 6: Modernização Visual
 
-Antes de criar o agent, vamos melhorar a experiência da calculadora com um ajuste pontual: trocar os nomes das operações por símbolos matemáticos. Isso torna a interface mais intuitiva e próxima de uma calculadora real.
+Antes de criar o agent, vamos substituir o formulário por um teclado de calculadora. Esta é uma mudança de interação, não apenas uma troca de rótulos: ela precisa de novos testes de estado e entrada.
 
 ## No chat, cole este prompt
 
@@ -329,10 +354,19 @@ A interface deve ter um display no topo para entrada e resultado, teclado com d�
 
 O usuário deve inserir os valores sequencialmente e selecionar a operação antes do cálculo. Utilize um tema dark, com botões grandes, boa hierarquia visual e feedback de interação, garantindo responsividade.
 
+Defina e teste: apenas um separador decimal por operando; C limpa todo
+o estado; apagar remove o último dígito; = sem dois operandos não envia
+uma requisição inválida; divisão por zero exibe erro e permite recomeçar.
+Mantenha rótulos acessíveis e operação por teclado.
+
 Preserve as rotas existentes, atualize os testes necessários, execute
 a suíte automatizada e valide o resultado no navegador em
 http://localhost:3000.
 ```
+
+## Verificação
+
+Teste `12 + 3 = 15`, `C`, `9 - 12 = -3`, `1.5 × 2 = 3` e `8 ÷ 0`. Após o erro, use `C` e confirme que `8 ÷ 2 = 4` funciona. Reduza a largura para 375 px e verifique se os controles continuam visíveis e operáveis.
 
 ---
 
@@ -353,8 +387,9 @@ Crie um custom agent de workspace chamado code-review-calc em
 .github/agents/code-review-calc.agent.md.
 
 O agent deve revisar o código sem modificar arquivos. Configure apenas
-as ferramentas necessárias para pesquisar e ler o workspace e executar
-comandos de verificação que não alterem o projeto.
+as ferramentas de leitura e pesquisa disponíveis no seletor de ferramentas.
+Não habilite ferramentas de edição ou terminal. Solicite ao usuário a saída
+de npm test como contexto da revisão.
 
 O agent deve:
 
@@ -369,7 +404,8 @@ O agent deve:
    - Sem lógica de negócio nas rotas
    - Tratamento explícito de erros previsíveis
 7. Identificar código duplicado, validações ausentes e casos de erro sem cobertura.
-8. Executar os testes e registrar o resultado, sem corrigir os problemas.
+8. Analisar a saída de testes fornecida e registrar o resultado, deixando
+   explícito que não executou os testes por conta própria.
 
 Ao final, produzir um relatório estruturado com:
 - Arquivo analisado
@@ -378,6 +414,8 @@ Ao final, produzir um relatório estruturado com:
 - Severidade
 - Sugestão de correção
 ```
+
+Antes de selecionar o agent, execute `npm test` no terminal e anexe a saída à conversa. A restrição de ferramentas torna a revisão somente leitura; uma instrução textual de "não editar" sozinha não impede comandos de escrita no terminal.
 
 ## Verificar o custom agent
 
@@ -404,6 +442,8 @@ Gera instruções gerais do projeto com base no que já existe no repositório. 
 
 > No harness Local, o Copilot vai analisar o projeto e propor as instruções globais automaticamente em `.github/copilot-instructions.md`.
 
+Se `/init` não estiver disponível, peça ao Chat para analisar o projeto e criar `.github/copilot-instructions.md` com os comandos realmente existentes, sem instalar dependências nem modificar a aplicação.
+
 Revise o arquivo gerado:
 
 1. Clique no ícone do **Explorer** na barra lateral esquerda.
@@ -426,3 +466,12 @@ Ao final do laboratório, confirme que:
 - O custom agent aparece no seletor de agents e não modifica arquivos.
 - `npm test` passa.
 - A calculadora funciona em `http://localhost:3000`.
+
+## Problemas comuns e encerramento
+
+- **Instruction não aplicada:** confirme o harness Local, o caminho e o frontmatter YAML. Abra um arquivo que corresponda ao `applyTo` e confira o contexto da resposta.
+- **Tailwind sem estilos:** peça ao agente para verificar a compilação local e o caminho do CSS servido pelo Express.
+- **Navegador indisponível:** abra a URL manualmente no navegador integrado pela Command Palette. Se a política da organização bloquear a ferramenta, faça a verificação manual e registre essa limitação.
+- Ao terminar, pare apenas o servidor deste lab com `Ctrl+C` no terminal correspondente. Guarde o projeto se quiser reutilizar as customizações; excluir a pasta é opcional.
+
+Fontes: [Customizações](https://code.visualstudio.com/docs/agent-customization/overview), [prompt files](https://code.visualstudio.com/docs/agent-customization/prompt-files) e [skills](https://code.visualstudio.com/docs/agent-customization/agent-skills).

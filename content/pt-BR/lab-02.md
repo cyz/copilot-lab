@@ -1,6 +1,12 @@
 # Lab: Feedback para Agentes no Navegador
 
-**Duração estimada:** 15 minutos
+**Duração estimada:** até 15 minutos.
+
+## Pré-requisitos
+
+- VS Code 1.132 ou superior, atualizado, com GitHub Copilot autenticado.
+- Node.js LTS e npm: confira `node --version` e `npm --version`.
+- Ferramentas de terminal e navegador habilitadas conforme a política da organização. Revise as solicitações de execução antes de aprová-las.
 
 ## O que vamos construir
 
@@ -60,7 +66,11 @@ Requisitos:
 - usar um tema escuro com tons quentes
 - criar layout responsivo
 - criar um servidor HTTP simples usando apenas recursos nativos do Node.js
+- servir apenas index.html, styles.css e app.js por uma lista explícita
+  de caminhos permitidos; escutar somente na interface local
 - adicionar um script npm start
+- usar links reais para seções existentes, sem simular envio de pedidos
+- manter rótulos acessíveis, contraste legível e navegação por teclado
 - iniciar a aplicação e abri-la no navegador integrado
 
 Implemente diretamente nos arquivos e informe a URL utilizada.
@@ -74,6 +84,8 @@ Confirme que:
 - O servidor está em execução.
 - A landing page está aberta no navegador integrado.
 - A página contém hero, diferenciais, cardápio e chamada para ação.
+
+Se o agente não conseguir abrir o navegador, use a Command Palette e procure **Browser** para abrir a URL no navegador integrado. Um navegador externo permite testar o site, mas não substitui a etapa de comentários integrados.
 
 ---
 
@@ -106,6 +118,8 @@ Melhore a leitura em telas pequenas, empilhando os cards e aumentando o espaço 
 
 Depois de adicionar os três comentários, envie-os ao Chat em uma única solicitação.
 
+Antes de enviar, confira se cada comentário inclui o elemento selecionado. Mencionar apenas "o botão" no chat não demonstra o uso de contexto visual.
+
 <video src="https://code.visualstudio.com/assets/updates/1_132/browser-commenting.mp4" title="Comentários em elementos do navegador integrado." autoplay loop controls muted></video>
 
 ---
@@ -131,8 +145,10 @@ No navegador integrado:
 
 1. Confirme que o nome Café Aurora permanece em destaque.
 2. Clique em **Ver cardápio** e verifique se a página navega até a seção correta.
-3. Reduza a largura do navegador.
-4. Confirme que os cards ficam empilhados e legíveis.
+3. Reduza a largura do navegador para aproximadamente 375 px.
+4. Confirme que os cards ficam empilhados e legíveis, sem rolagem horizontal.
+5. Use `Tab` e `Enter` para ativar **Ver cardápio** e confira se o foco permanece visível.
+6. Volte à largura de desktop e confirme que o restante do design foi preservado.
 
 Se algum item falhar, descreva o comportamento observado ao agente e peça a correção.
 
@@ -146,5 +162,12 @@ Se algum item falhar, descreva o comportamento observado ao agente e peça a cor
 - Os comentários foram enviados juntos ao agente.
 - O agente implementou o feedback visual.
 - O botão e o layout responsivo foram testados.
+
+## Problemas comuns e encerramento
+
+- **Atalho não funciona:** mantenha o foco no navegador integrado e procure a ação de comentários na barra de ferramentas. Confira se a versão instalada possui o recurso.
+- **Porta ocupada:** reutilize o servidor deste projeto ou peça outra porta; não encerre servidores desconhecidos.
+- **Página não atualiza:** confirme a URL e recarregue após salvar. Peça ao agente para verificar o terminal se houver erro.
+- Pare o servidor deste lab com `Ctrl+C` no terminal correspondente. Guarde o projeto ou exclua apenas a pasta criada para este exercício, se desejar.
 
 Fonte: [VS Code 1.132 - Commenting in the integrated browser](https://code.visualstudio.com/updates/v1_132#_commenting-in-the-integrated-browser)

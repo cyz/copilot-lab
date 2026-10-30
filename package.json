@@ -1,0 +1,10 @@
+{
+  "name": "copilot-quick-labs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test",
+    "start": "node scripts/serve.mjs"
+  }
+}

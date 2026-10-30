@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Copilot Quick Labs by @cyz. Laboratórios práticos de GitHub Copilot no VS Code em português brasileiro, inglês e espanhol.">
+  <title>Copilot Quick Labs by @cyz</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme = param === "dark" || param === "light" ? param : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./content.js" defer></script>
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#exercise">Ir para o exercício</a>
+  <header class="site-header">
+    <a class="brand" href="#lang=pt-BR&amp;lab=calculator">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><rect x="2.5" y="2.5" width="35" height="35" rx="11.5"/><path d="M18 9.5c1 5 2.9 7.7 8 8.7-5.1 1-7 3.7-8 8.7-1-5-2.9-7.7-8-8.7 5.1-1 7-3.7 8-8.7Z"/><path d="M28.5 22.5c.5 2.3 1.4 3.6 3.7 4.1-2.3.5-3.2 1.8-3.7 4.1-.5-2.3-1.4-3.6-3.7-4.1 2.3-.5 3.2-1.8 3.7-4.1Z"/></svg>
+      <span>Copilot Quick Labs <strong>by @cyz</strong></span>
+    </a>
+    <span class="brand-route">VS Code</span>
+    <div class="header-actions">
+      <div class="progress-pill"><span id="progress-label" aria-live="polite"></span><progress id="progress" max="3" value="0"></progress></div>
+      <label for="language" id="language-label">Idioma</label>
+      <select id="language">
+        <option value="pt-BR">Português (Brasil)</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+      </select>
+      <button id="theme" class="icon-button" type="button" aria-label="Alternar tema"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/></svg></button>
+    </div>
+  </header>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-glow hero-glow-one"></div><div class="hero-glow hero-glow-two"></div>
+    <div class="hero-content">
+      <p class="eyebrow" id="eyebrow">APRENDA FAZENDO · VS CODE + GITHUB COPILOT</p>
+      <h1 id="hero-title">Do primeiro prompt<br>à experiência completa.</h1>
+      <p id="hero-description">Três projetos reais para explorar agentes, customizações e feedback visual. No seu ritmo, no seu idioma.</p>
+      <div class="hero-actions"><a class="primary" id="start" href="#exercise">Começar o laboratório →</a><span id="duration" class="duration">Até 15 minutos por lab</span></div>
+    </div>
+    <div class="app-window" aria-hidden="true">
+      <div class="window-bar"><span></span><span></span><span></span><strong>copilot-quick-labs</strong></div>
+      <div class="window-body">
+        <div class="mini-sidebar"><div>✦</div><span class="active"></span><span></span><span></span><span></span></div>
+        <div class="session-preview">
+          <div class="session-label">SESSION · INTERACTIVE</div>
+          <div class="chat-bubble" id="preview-prompt">Crie uma calculadora com testes automatizados.</div>
+          <div class="agent-row"><span>✦</span><div><strong>Copilot</strong><p id="hero-result">Vou criar o projeto, executar os testes e abrir no navegador.</p></div></div>
+          <div class="file-change"><span>+</span> index.html <em>✓</em></div>
+          <div class="typing"><i></i><i></i><i></i></div>
+        </div>
+        <div class="browser-preview">
+          <div class="browser-bar"><span></span><span>localhost:3000</span></div>
+          <div class="preview-spark">✦</div><strong id="preview-title">CALCULADORA</strong>
+          <div class="calculator-display">12 + 3 = <b>15</b></div>
+          <div class="calculator-keys"><span>7</span><span>8</span><span>9</span><span>÷</span><span>4</span><span>5</span><span>6</span><span>×</span><span>1</span><span>2</span><span>3</span><span>−</span><span>C</span><span>0</span><span>=</span><span>+</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="inspiration-banner home-only" aria-labelledby="inspiration-title">
+    <p class="section-kicker" id="inspiration-kicker">INSPIRAÇÃO</p>
+    <h2 id="inspiration-title">Inspirado em First Steps with GitHub Copilot</h2>
+    <p id="inspiration-description">Este projeto é inspirado no workshop de James Montemagno, com exercícios próprios e conteúdo em português brasileiro, inglês e espanhol.</p>
+    <a id="inspiration-link" href="https://jamesmontemagno.github.io/first-steps-with-github-copilot/">Conheça o projeto de James Montemagno ↗</a>
+  </section>
+  <div class="workspace">
+    <aside class="sidebar">
+      <p class="eyebrow" id="guide-label">NESTE LABORATÓRIO</p>
+      <nav id="sections" aria-label="Etapas"></nav>
+      <button id="reset" type="button">Limpar progresso</button>
+    </aside>
+    <main id="exercise" tabindex="-1">
+      <a id="back-to-labs" class="back-link" href="./index.html" hidden>← Todos os laboratórios</a>
+      <section class="route-section" aria-labelledby="route-title">
+        <p class="section-kicker" id="overview-kicker">01 / VISÃO GERAL</p>
+        <h2 id="route-title">Um projeto. Seu fluxo com Copilot.</h2>
+        <p class="section-intro" id="route-caption">Escolha um laboratório e explore o fluxo completo de desenvolvimento com agentes.</p>
+        <nav id="lab-cards" aria-label="Laboratórios"></nav>
+        <div class="outcome-grid">
+          <div><span class="feature-icon">⌘</span><strong id="outcome-build">Crie com contexto</strong><p id="outcome-build-description">Oriente o agente com instruções claras e projetos pequenos.</p></div>
+          <div><span class="feature-icon">✓</span><strong id="outcome-test">Teste o resultado</strong><p id="outcome-test-description">Confirme o comportamento com testes e no navegador.</p></div>
+          <div><span class="feature-icon">✦</span><strong id="outcome-learn">Aprenda o fluxo</strong><p id="outcome-learn-description">Experimente os recursos e mantenha o controle das mudanças.</p></div>
+        </div>
+        <div class="callout"><span>✦</span><div><strong id="callout-title">Pequenos projetos. Aprendizado real.</strong><p id="callout-description">Siga os prompts, observe o agente e valide cada resultado antes de continuar.</p></div></div>
+      </section>
+      <div class="exercise-toolbar detail-only"><span id="lab-number"></span><a id="source" href="https://github.com/cyz/copilot-lab">Ver Markdown ↗</a></div>
+      <article id="article" class="detail-only"></article>
+      <div class="completion-panel detail-only"><div class="finish-badge">✓</div><h2 id="finish-title">Você completou o laboratório.</h2><p id="finish-description">Confirme o checklist e continue explorando os outros projetos.</p><label id="complete-label"><input id="complete" type="checkbox"><span id="complete-text">Marcar como concluído</span></label></div>
+      <div class="bottom-nav detail-only"><button id="previous" type="button">Anterior</button><button id="next" type="button">Próximo</button></div>
+    </main>
+  </div>
+  <footer><div class="footer-brand"><span>✦</span><div><strong>Copilot Quick Labs by @cyz</strong></div></div><div class="footer-links"><a href="https://github.com/cyz/copilot-lab"><strong>GitHub</strong><span>↗</span></a></div></footer>
+  <p id="status" role="status" aria-live="polite"></p>
+  <noscript>Ative JavaScript para selecionar idiomas. Enable JavaScript to select languages. Habilita JavaScript para seleccionar idiomas. <a href="https://github.com/cyz/copilot-lab">Markdown no GitHub</a></noscript>
+</body>
+</html>
